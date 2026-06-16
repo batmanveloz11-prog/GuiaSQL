@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prácticas de SQL</title>
+ 
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <!-- CSS personalizado -->
+    <link href="css/estilos.css" rel="stylesheet">
+</head>
+<body>
+ 
+    <!-- Botón para abrir el menú en móviles -->
+    <button class="btn btn-primary d-md-none m-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuLateral">
+        <i class="bi bi-list"></i> Menú
+    </button>
+ 
+    <div class="d-flex">
+ 
+        <!-- ===================== MENÚ LATERAL ===================== -->
+        <nav class="offcanvas-md offcanvas-start sidebar" tabindex="-1" id="menuLateral" style="overflow-y: auto; max-height: 100vh;">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title text-white">Prácticas SQL</h5>
+                <button type="button" class="btn-close btn-close-white d-md-none" data-bs-dismiss="offcanvas" data-bs-target="#menuLateral"></button>
+            </div>
+            <div class="offcanvas-body p-0" style="overflow-y: auto;">
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a class="nav-link" href="paginas/practica01.html" data-page="paginas/practica01.html">1. Introducción a SQL</a></li>
+                    <li class="nav-item"><a class="nav-link" href="paginas/practica02.html" data-page="paginas/practica02.html">2. Diseño en SQL</a></li>
+                    <li class="nav-item"><a class="nav-link" href="paginas/practica03.html" data-page="paginas/practica03.html">3. Creación de Base de Datos y Restricciones</a></li>
+                    <li class="nav-item"><a class="nav-link" href="paginas/practica04.html" data-page="paginas/practica04.html">4. Modificar y Eliminar Tablas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="paginas/practica05.html" data-page="paginas/practica05.html">5. Foreign Key y Normalización</a></li>
+                    <li class="nav-item"><a class="nav-link" href="paginas/practica06.html" data-page="paginas/practica06.html">6. Insertar datos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="paginas/practica07.html" data-page="paginas/practica07.html">7. Eliminar</a></li>
+                    <li class="nav-item"><a class="nav-link" href="paginas/practica08.html" data-page="paginas/practica08.html">8. Actualizar datos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="paginas/practica09.html" data-page="paginas/practica09.html">9. SELECT - Seleccionar Datos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="paginas/practica10.html" data-page="paginas/practica10.html">10. Operadores Lógicos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="paginas/practica11.html" data-page="paginas/practica11.html">11. Order by, limit y top</a></li>
+                    <li class="nav-item"><a class="nav-link" href="paginas/practica12.html" data-page="paginas/practica12.html">12. Funciones de texto</a></li>
+                    <li class="nav-item"><a class="nav-link" href="paginas/practica13.html" data-page="paginas/practica13.html">13. Funciones Numericas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="paginas/practica14.html" data-page="paginas/practica14.html">14. Manejo de Fechas y Horas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="paginas/practica15.html" data-page="paginas/practica15.html">15. Claves Primarias y Foráneas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="paginas/practica16.html" data-page="paginas/practica16.html">16. Índices</a></li>
+                    <li class="nav-item"><a class="nav-link" href="paginas/practica17.html" data-page="paginas/practica17.html">17. Vistas (VIEWS)</a></li>
+                    <li class="nav-item"><a class="nav-link" href="paginas/practica18.html" data-page="paginas/practica18.html">18. Procedimientos Almacenados</a></li>
+                    <li class="nav-item"><a class="nav-link" href="paginas/practica19.html" data-page="paginas/practica19.html">19. Triggers</a></li>
+                    <li class="nav-item"><a class="nav-link" href="paginas/practica20.html" data-page="paginas/practica20.html">20. Transacciones</a></li>
+                </ul>
+            </div>
+        </nav>
+ 
+        <!-- ===================== CONTENIDO PRINCIPAL ===================== -->
+        <main class="contenido flex-grow-1">
+            <div class="container-fluid p-4">
+                
+                <div class="mb-4 p-3 rounded-3 shadow-sm" style="background-color: #ffffff; border: 1px solid var(--color-borde);">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="fw-bold small text-uppercase" style="color: var(--color-secundario); letter-spacing: 0.5px;">
+                            <i class="bi bi-trophy-fill me-2" style="color: #eab308;"></i>Progreso del Curso
+                        </span>
+                        <span id="porcentajeTexto" class="fw-bold" style="color: var(--color-activo); font-size: 0.95rem;">0% completado</span>
+                    </div>
+                    <div class="progress" style="height: 10px; background-color: #e2e8f0; border-radius: 9999px;">
+                        <div id="barraProgreso" class="progress-bar progress-bar-striped progress-bar-animated" 
+                            role="progressbar" 
+                            style="width: 0%; background-color: var(--color-activo); border-radius: 9999px; transition: width 0.4s ease;" 
+                            aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="contenidoPagina">
+                    <div class="text-center py-5">
+                        <i class="bi bi-database-fill-gear text-muted mb-3" style="font-size: 4rem; color: var(--color-activo) !important; opacity: 0.3;"></i>
+                        <h1 class="mb-3 fw-bold" style="color: var(--color-primario);">Bienvenido a las Prácticas de SQL</h1>
+                        <p class="lead text-muted mb-4">Selecciona un tema del menú lateral para comenzar tu aprendizaje.</p>
+                        <div class="alert alert-info d-inline-block px-4" role="alert">
+                            <i class="bi bi-arrow-left-circle-fill me-2"></i> Elige una práctica del menú para ver su contenido aquí.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+ 
+    </div>
+ 
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- JS personalizado -->
+    <script src="js/script.js"></script>
+ 
+</body>
+</html>
+ 
