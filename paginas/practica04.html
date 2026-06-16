@@ -45,7 +45,28 @@
                 <i class="bi bi-book-half me-2" style="color: var(--color-hover);"></i>
             </h4>
             <p class="mb-4" style="line-height: 1.7; color: #334155;">
-                <strong></strong>
+                <strong>Modificar y Eliminar Tablas</strong>
+                -- Agregar una columna
+                ALTER TABLE empleados ADD salario DECIMAL(10,2);
+
+                -- Modificar el tipo de una columna
+                ALTER TABLE empleados MODIFY salario DECIMAL(12,2) NOT NULL;
+
+                -- Renombrar una columna
+                ALTER TABLE empleados RENAME COLUMN salario TO sueldo;
+
+                -- Eliminar una columna
+                ALTER TABLE empleados DROP COLUMN telefono;
+
+                -- Renombrar la tabla
+                ALTER TABLE empleados RENAME TO trabajadores;
+
+                -- Eliminar la tabla completamente
+                DROP TABLE trabajadores;
+
+                -- Eliminar solo los datos (estructura queda intacta)
+                TRUNCATE TABLE trabajadores;
+
             </p>
             
             <div class="text-center bg-white p-3 rounded-3 border shadow-sm mx-auto" style="max-width: 750px;">
