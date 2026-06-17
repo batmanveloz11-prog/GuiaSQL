@@ -36,7 +36,7 @@
             </span>
             <small class="text-muted fw-semibold">Fundamentos</small>
         </div>
-        <h2 class="fw-bold" style="color: var(--color-primario); letter-spacing: -0.5px;">Procedimientos Almacenados (video de Jesus)</h2>
+        <h2 class="fw-bold" style="color: var(--color-primario); letter-spacing: -0.5px;">Procedimientos Almacenados (video y presentacion de jesus)</h2>
     </div>
 
     <div class="card border-0 shadow-sm rounded-3 overflow-hidden mb-4" style="background-color: #f8fafc; border: 1px solid var(--color-borde) !important;">
@@ -46,11 +46,193 @@
             </h4>
             <p class="mb-4" style="line-height: 1.7; color: #334155;">
                 <strong></strong>
+
+                <div class="row">
+                    <div class="col-12">
+                        <h3 class="text-primary mb-3">. Procedimientos Almacenados</h3>
+                        <p class="fs-5 text-muted mb-4">Un procedimiento almacenado (Stored Procedure) es un conjunto de instrucciones SQL agrupadas y guardadas en el servidor de base de datos que se pueden ejecutar repetidamente.</p>
+                        
+                        <!-- Concepto de Delimiter -->
+                        <div class="card mb-4 border-light shadow-sm">
+                            <div class="card-header bg-dark text-white fw-bold">
+                                <i class="bi bi-code-slash me-2"></i>El delimitador personalizado (DELIMITER)
+                            </div>
+                            <div class="card-body">
+                                <p class="text-secondary">En MySQL, el carácter punto y coma <code>;</code> es el delimitador por defecto para ejecutar instrucciones. Al crear un procedimiento, que contiene múltiples instrucciones internas terminadas en <code>;</code>, es necesario cambiar temporalmente el delimitador (por ejemplo a <code>$$</code> o <code>//</code>) para que MySQL no ejecute el código antes de terminar de definirlo.</p>
+                                <pre class="m-0"><code class="language-sql">-- Cambiar el delimitador a $$
+                DELIMITER $$
+
+                -- Cambiar el delimitador a //
+                DELIMITER //</code></pre>
+                            </div>
+                        </div>
+
+                        <!-- Tabla y Datos de Prueba -->
+                        <div class="card mb-4 border-light shadow-sm">
+                            <div class="card-header bg-indigo text-white fw-bold">
+                                <i class="bi bi-database me-2"></i>Tabla y Datos de Prueba (alumno)
+                            </div>
+                            <div class="card-body">
+                                <pre class="mb-2"><code class="language-sql">DROP TABLE IF EXISTS alumno;</code></pre>
+                                <pre class="mb-2"><code class="language-sql">CREATE TABLE alumno (
+                    ID INT AUTO_INCREMENT PRIMARY KEY,
+                    Nombre VARCHAR(100) NOT NULL,
+                    AP VARCHAR(50) NOT NULL, 
+                    AM VARCHAR(50) NOT NULL  
+                )//</code></pre>
+                                <pre class="m-0"><code class="language-sql">INSERT INTO alumno (Nombre, AP, AM) VALUES
+                ('Gabriel de Jesus', 'Aguirre', 'Ortiz'),
+                ('Pedro', 'Perez', 'Cracio'),
+                ('Ana Maria', 'Gomez', 'Diaz'),
+                ('Carlos', 'Ruiz', 'Mendoza'),
+                ('Maria Laura', 'Torres', 'Castro')//</code></pre>
+                            </div>
+                        </div>
+
+                        <!-- ==================== EJEMPLOS DE PROCEDIMIENTOS ==================== -->
+                        <div class="row">
+                            
+                            <!-- Procedimiento Básico -->
+                            <div class="col-md-6 mb-4">
+                                <div class="card h-100 border-light shadow-sm">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-primary"><span class="badge bg-primary me-2">1</span>Procedimiento Básico (Select All)</h5>
+                                        <pre class="mb-2"><code class="language-sql">CREATE PROCEDURE ga()
+                BEGIN
+                    SELECT * FROM alumno;
+                END//</code></pre>
+                                        <p class="text-secondary small">Llamada al procedimiento:</p>
+                                        <pre class="m-0"><code class="language-sql">CALL ga()//</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Seleccionar por ID -->
+                            <div class="col-md-6 mb-4">
+                                <div class="card h-100 border-light shadow-sm">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-success"><span class="badge bg-success me-2">2</span>Seleccionar por ID (Select ID)</h5>
+                                        <pre class="mb-2"><code class="language-sql">CREATE PROCEDURE selecionar(IN p_id INT)
+                BEGIN
+                    SELECT ID, Nombre, AP, AM 
+                    FROM alumno 
+                    WHERE ID = p_id;
+                END//</code></pre>
+                                        <p class="text-secondary small">Llamada al procedimiento:</p>
+                                        <pre class="m-0"><code class="language-sql">CALL selecionar(3)//</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Insertar Datos -->
+                            <div class="col-md-6 mb-4">
+                                <div class="card h-100 border-light shadow-sm">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-warning text-dark"><span class="badge bg-warning text-dark me-2">3</span>Insertar Datos (Insert)</h5>
+                                        <pre class="mb-2"><code class="language-sql">CREATE PROCEDURE insertar(
+                    IN p_nombre VARCHAR(100),
+                    IN p_ap VARCHAR(100),
+                    IN p_am VARCHAR(100)
+                )
+                BEGIN
+                    INSERT INTO alumno (Nombre, AP, AM) 
+                    VALUES (p_nombre, p_ap, p_am);
+                END//</code></pre>
+                                        <p class="text-secondary small">Llamada al procedimiento:</p>
+                                        <pre class="m-0"><code class="language-sql">CALL insertar('Gabriel', 'Aguirre', 'Edomex')//</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Actualizar Datos -->
+                            <div class="col-md-6 mb-4">
+                                <div class="card h-100 border-light shadow-sm">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-danger"><span class="badge bg-danger me-2">4</span>Actualizar Datos (Update)</h5>
+                                        <pre class="mb-2"><code class="language-sql">CREATE PROCEDURE actualizar(
+                    IN p_id INT,
+                    IN p_nombre VARCHAR(100),
+                    IN p_ap VARCHAR(100),
+                    IN p_am VARCHAR(100)
+                )
+                BEGIN
+                    UPDATE alumno 
+                    SET Nombre = p_nombre, 
+                        AP = p_ap, 
+                        AM = p_am 
+                    WHERE ID = p_id;
+                END//</code></pre>
+                                        <p class="text-secondary small">Llamada al procedimiento:</p>
+                                        <pre class="m-0"><code class="language-sql">CALL actualizar(2, 'Pedro Modificado', 'Perez', 'Cracio')//</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Eliminar Datos -->
+                            <div class="col-md-6 mb-4">
+                                <div class="card h-100 border-light shadow-sm">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-info"><span class="badge bg-info text-dark me-2">5</span>Eliminar Datos (Delete)</h5>
+                                        <pre class="mb-2"><code class="language-sql">CREATE PROCEDURE eliminar(IN p_id INT)
+                BEGIN
+                    DELETE FROM alumno 
+                    WHERE ID = p_id;
+                END//</code></pre>
+                                        <p class="text-secondary small">Llamada al procedimiento:</p>
+                                        <pre class="m-0"><code class="language-sql">CALL eliminar(5)//</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Administración de Procedimientos -->
+                            <div class="col-md-6 mb-4">
+                                <div class="card h-100 border-light shadow-sm">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-dark"><span class="badge bg-dark me-2">6</span>Ver y Eliminar Procedimientos</h5>
+                                        <p class="text-secondary small">Ver todos los procedimientos en la base de datos actual:</p>
+                                        <pre class="mb-2"><code class="language-sql">SHOW PROCEDURE STATUS 
+                WHERE Db = DATABASE()//</code></pre>
+                                        <p class="text-secondary small">Eliminar un procedimiento existente:</p>
+                                        <pre class="m-0"><code class="language-sql">DROP PROCEDURE IF EXISTS nombre_del_procedimiento//</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Sandbox Interactivo de Práctica -->
+                        <div class="card mt-4 border-info">
+                            <div class="card-header bg-info-subtle text-info-emphasis">
+                                <h5 class="m-0"><i class="bi bi-pencil-square me-2"></i>Área de Práctica Interactiva</h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="fw-bold">Intenta escribir una consulta SQL para eliminar un procedimiento llamado 'actualizar' si es que existe:</p>
+                                <div class="mb-3">
+                                    <textarea class="form-control font-monospace" id="sqlQueryInput" rows="3" placeholder="DROP PROCEDURE IF EXISTS actualizar;"></textarea>
+                                </div>
+                                <button class="btn btn-primary" id="btnRunQuery"><i class="bi bi-play-fill me-1"></i>Ejecutar Consulta</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </p>
             
             <div class="text-center bg-white p-3 rounded-3 border shadow-sm mx-auto" style="max-width: 750px;">
                 <video src="video/Procesamiento Almacenado en mysql.mp4" alt="" class="img-fluid rounded-2" controls>
                 </video>
+                <img src="/img/FuncionesAlmacenadas/Procesamiento_Almacenado_en_MySQL_260615_185115_page-0001.jpg" alt="" class="img-fluid rounded-2">
+                <img src="/img/FuncionesAlmacenadas/Procesamiento_Almacenado_en_MySQL_260615_185115_page-0002.jpg" alt="" class="img-fluid rounded-2">
+                <img src="/img/FuncionesAlmacenadas/Procesamiento_Almacenado_en_MySQL_260615_185115_page-0003.jpg" alt="" class="img-fluid rounded-2">
+                <img src="/img/FuncionesAlmacenadas/Procesamiento_Almacenado_en_MySQL_260615_185115_page-0004.jpg" alt="" class="img-fluid rounded-2">
+                <img src="/img/FuncionesAlmacenadas/Procesamiento_Almacenado_en_MySQL_260615_185115_page-0005.jpg" alt="" class="img-fluid rounded-2">
+                <img src="/img/FuncionesAlmacenadas/Procesamiento_Almacenado_en_MySQL_260615_185115_page-0006.jpg" alt="" class="img-fluid rounded-2">
+                <img src="/img/FuncionesAlmacenadas/Procesamiento_Almacenado_en_MySQL_260615_185115_page-0007.jpg" alt="" class="img-fluid rounded-2">
+                <img src="/img/FuncionesAlmacenadas/Procesamiento_Almacenado_en_MySQL_260615_185115_page-0008.jpg" alt="" class="img-fluid rounded-2">
+                <img src="/img/FuncionesAlmacenadas/Procesamiento_Almacenado_en_MySQL_260615_185115_page-0009.jpg" alt="" class="img-fluid rounded-2">
+                <img src="/img/FuncionesAlmacenadas/Procesamiento_Almacenado_en_MySQL_260615_185115_page-0010.jpg" alt="" class="img-fluid rounded-2">
+                <img src="/img/FuncionesAlmacenadas/Procesamiento_Almacenado_en_MySQL_260615_185115_page-0011.jpg" alt="" class="img-fluid rounded-2">
+                <img src="/img/FuncionesAlmacenadas/Procesamiento_Almacenado_en_MySQL_260615_185115_page-0012.jpg" alt="" class="img-fluid rounded-2">
             </div>
         </div>
     </div>
