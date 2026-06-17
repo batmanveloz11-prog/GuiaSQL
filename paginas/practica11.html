@@ -46,6 +46,123 @@
             </h4>
             <p class="mb-4" style="line-height: 1.7; color: #334155;">
                 <strong></strong>
+                <div class="row">
+                    <div class="col-12">
+                        <h3 class="text-primary mb-3">ORDER BY, LIMIT y TOP (Katanas Edition)</h3>
+                        <p class="fs-5 text-muted mb-4">Aprende a ordenar tus resultados y a restringir la cantidad de registros devueltos usando <code>ORDER BY</code>, <code>LIMIT</code> (MySQL) y su equivalente <code>TOP</code> (SQL Server).</p>
+                        
+                        <!-- Nota sobre TOP vs LIMIT -->
+                        <div class="alert alert-info border-0 mb-4 shadow-sm" role="alert">
+                            <h6 class="alert-heading fw-bold text-info-emphasis"><i class="bi bi-info-circle-fill me-2"></i>Diferencia de Motores: TOP vs LIMIT</h6>
+                            <p class="small m-0 text-info-emphasis">La palabra clave <code>TOP</code> pertenece a SQL Server (Microsoft). En MySQL, se utiliza <code>LIMIT</code> al final de la consulta para lograr el mismo resultado. Aquí verás ambos enfoques.</p>
+                        </div>
+
+                        <!-- ==================== CASOS DE EJEMPLO ==================== -->
+                        <div class="row">
+                            
+                            <!-- Caso 1 -->
+                            <div class="col-md-6 mb-4">
+                                <div class="card h-100 border-light shadow-sm">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-primary"><span class="badge bg-primary me-2">1</span>Ordenar Ascendente (ORDER BY simple)</h5>
+                                        <p class="text-secondary small">Ordena las katanas de menor a mayor precio (el orden ascendente es por defecto):</p>
+                                        <pre><code class="language-sql">SELECT * FROM katanas
+                ORDER BY precio;</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Caso 2 -->
+                            <div class="col-md-6 mb-4">
+                                <div class="card h-100 border-light shadow-sm">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-success"><span class="badge bg-success me-2">2</span>Ordenar Descendente (ORDER BY DESC)</h5>
+                                        <p class="text-secondary small">Ordena las katanas de mayor a menor precio:</p>
+                                        <pre><code class="language-sql">SELECT * FROM katanas
+                ORDER BY precio DESC;</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Caso 3 -->
+                            <div class="col-md-6 mb-4">
+                                <div class="card h-100 border-light shadow-sm">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-warning text-dark"><span class="badge bg-warning text-dark me-2">3</span>Ordenar por múltiples columnas</h5>
+                                        <p class="text-secondary small">Ordena por material (A-Z) y si se repite, por longitud (de mayor a menor):</p>
+                                        <pre><code class="language-sql">SELECT * FROM katanas
+                ORDER BY material ASC, longitud DESC;</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Caso 4 -->
+                            <div class="col-md-6 mb-4">
+                                <div class="card h-100 border-light shadow-sm">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-dark"><span class="badge bg-dark me-2">4</span>Limitar resultados (LIMIT en MySQL)</h5>
+                                        <p class="text-secondary small">Obtiene únicamente los primeros 3 registros de la tabla:</p>
+                                        <pre><code class="language-sql">SELECT * FROM katanas
+                LIMIT 3;</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Caso 5 -->
+                            <div class="col-md-6 mb-4">
+                                <div class="card h-100 border-light shadow-sm">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-danger"><span class="badge bg-danger me-2">5</span>Paginación con Desplazamiento (LIMIT OFFSET)</h5>
+                                        <p class="text-secondary small">Ignora los primeros 2 registros y obtiene los siguientes 3:</p>
+                                        <pre><code class="language-sql">SELECT * FROM katanas
+                LIMIT 3 OFFSET 2;</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Caso 6 -->
+                            <div class="col-md-6 mb-4">
+                                <div class="card h-100 border-light shadow-sm">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-info"><span class="badge bg-info text-dark me-2">6</span>Obtener primeros registros (TOP en SQL Server)</h5>
+                                        <p class="text-secondary small">Equivalente de LIMIT en SQL Server (va después de la palabra SELECT):</p>
+                                        <pre><code class="language-sql">SELECT TOP 5 * 
+                FROM katanas;</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Caso 7 -->
+                            <div class="col-md-12 mb-4">
+                                <div class="card border-light shadow-sm">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-indigo"><span class="badge bg-indigo me-2">7</span>Obtener un porcentaje de filas (TOP PERCENT en SQL Server)</h5>
+                                        <p class="text-secondary small">Obtiene el primer 25% de las filas de la tabla (no soportado directamente en MySQL nativo simple):</p>
+                                        <pre><code class="language-sql">SELECT TOP 25 PERCENT *
+                FROM katanas
+                ORDER BY precio DESC;</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Sandbox Interactivo de Práctica -->
+                        <div class="card mt-4 border-info">
+                            <div class="card-header bg-info-subtle text-info-emphasis">
+                                <h5 class="m-0"><i class="bi bi-pencil-square me-2"></i>Área de Práctica Interactiva</h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="fw-bold">Intenta escribir una consulta para seleccionar las 3 katanas más caras ordenadas de mayor a menor precio:</p>
+                                <div class="mb-3">
+                                    <textarea class="form-control font-monospace" id="sqlQueryInput" rows="3" placeholder="SELECT * FROM katanas ORDER BY precio DESC LIMIT 3;"></textarea>
+                                </div>
+                                <button class="btn btn-primary" id="btnRunQuery"><i class="bi bi-play-fill me-1"></i>Ejecutar Consulta</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </p>
             
             <div class="text-center bg-white p-3 rounded-3 border shadow-sm mx-auto" style="max-width: 750px;">

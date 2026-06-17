@@ -45,28 +45,93 @@
                 <i class="bi bi-book-half me-2" style="color: var(--color-hover);"></i>
             </h4>
             <p class="mb-4" style="line-height: 1.7; color: #334155;">
-                <strong>Modificar y Eliminar Tablas</strong>
-                -- Agregar una columna
-                ALTER TABLE empleados ADD salario DECIMAL(10,2);
+                <strong></strong>
+                <h2>Modificaciones de Tabla (DDL)</h2>
 
-                -- Modificar el tipo de una columna
-                ALTER TABLE empleados MODIFY salario DECIMAL(12,2) NOT NULL;
+                    <!-- ===== 1. RENAME ===== -->
+                    <h3>1. RENAME — Renombrar la tabla</h3>
+                    <pre><code class="language-sql">
+                    ALTER TABLE empleados RENAME TO colaboradores;
+                    </code></pre>
 
-                -- Renombrar una columna
-                ALTER TABLE empleados RENAME COLUMN salario TO sueldo;
+                    <!-- ===== 2. ADD COLUMN ===== -->
+                    <h3>2. ADD COLUMN — Agregar columna</h3>
+                    <pre><code class="language-sql">
+                    ALTER TABLE colaboradores ADD fecha_ingreso DATE;
+                    </code></pre>
 
-                -- Eliminar una columna
-                ALTER TABLE empleados DROP COLUMN telefono;
+                    <!-- ===== 3. DROP COLUMN ===== -->
+                    <h3>3. DROP COLUMN — Eliminar columna</h3>
+                    <pre><code class="language-sql">
+                    ALTER TABLE colaboradores DROP COLUMN puesto;
+                    </code></pre>
 
-                -- Renombrar la tabla
-                ALTER TABLE empleados RENAME TO trabajadores;
+                    <!-- ===== 4. CHANGE ===== -->
+                    <h3>4. CHANGE — Renombrar columna y cambiar tipo</h3>
+                    <pre><code class="language-sql">
+                    -- Renombra 'nombre' a 'nombre_completo' y ajusta su tipo
+                    ALTER TABLE colaboradores CHANGE nombre nombre_completo VARCHAR(100);
+                    </code></pre>
 
-                -- Eliminar la tabla completamente
-                DROP TABLE trabajadores;
+                    <!-- ===== 5. MODIFY ===== -->
+                    <h3>5. MODIFY — Modificar tipo de dato</h3>
+                    <pre><code class="language-sql">
+                    -- Cambia el tipo sin renombrar la columna
+                    ALTER TABLE colaboradores MODIFY salario DECIMAL(12,2);
+                    </code></pre>
 
-                -- Eliminar solo los datos (estructura queda intacta)
-                TRUNCATE TABLE trabajadores;
+                    <!-- ===== 6. ADD CONSTRAINT PK ===== -->
+                    <h3>6. ADD CONSTRAINT PK — Agregar clave primaria</h3>
+                    <pre><code class="language-sql">
+                    ALTER TABLE colaboradores
+                        ADD CONSTRAINT pk_colaboradores PRIMARY KEY (id);
+                    </code></pre>
 
+                    <!-- ===== 7. ADD CONSTRAINT FK ===== -->
+                    <h3>7. ADD CONSTRAINT FK — Agregar clave foránea</h3>
+                    <pre><code class="language-sql">
+                    -- Paso 1: agregar la columna
+                    ALTER TABLE colaboradores ADD id_departamento INT;
+
+                    -- Paso 2: vincular como FK
+                    ALTER TABLE colaboradores
+                        ADD CONSTRAINT fk_departamento
+                        FOREIGN KEY (id_departamento) REFERENCES departamentos(id);
+                    </code></pre>
+
+                    <!-- ===== 8. UNIQUE / DEFAULT / CHECK ===== -->
+                    <h3>8. ADD CONSTRAINT — UNIQUE, DEFAULT y CHECK</h3>
+
+                    <h4>UNIQUE — Sin correos duplicados</h4>
+                    <pre><code class="language-sql">
+                    ALTER TABLE colaboradores ADD correo VARCHAR(100);
+                    ALTER TABLE colaboradores ADD CONSTRAINT uq_correo UNIQUE (correo);
+                    </code></pre>
+
+                    <h4>DEFAULT — Salario por defecto</h4>
+                    <pre><code class="language-sql">
+                    ALTER TABLE colaboradores ALTER COLUMN salario SET DEFAULT 15000.00;
+                    </code></pre>
+
+                    <h4>CHECK — Salario siempre positivo</h4>
+                    <pre><code class="language-sql">
+                    ALTER TABLE colaboradores
+                        ADD CONSTRAINT chk_salario_positivo CHECK (salario > 0);
+                    </code></pre>
+
+                    <!-- ===== 9. TRUNCATE ===== -->
+                    <h3>9. TRUNCATE — Vaciar la tabla</h3>
+                    <pre><code class="language-sql">
+                    -- Borra todos los registros pero conserva la estructura
+                    TRUNCATE TABLE colaboradores;
+                    </code></pre>
+
+                    <!-- ===== 10. DROP TABLE ===== -->
+                    <h3>10. DROP TABLE — Eliminar la tabla</h3>
+                    <pre><code class="language-sql">
+                    -- Elimina la tabla y toda su estructura definitivamente
+                    DROP TABLE colaboradores;
+                    </code></pre>
             </p>
             
             <div class="text-center bg-white p-3 rounded-3 border shadow-sm mx-auto" style="max-width: 750px;">

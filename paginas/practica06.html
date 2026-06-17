@@ -46,6 +46,112 @@
             </h4>
             <p class="mb-4" style="line-height: 1.7; color: #334155;">
                 <strong></strong>
+                <div class="row">
+                <div class="col-12">
+                    <h3 class="text-primary mb-3">6. INSERT - Insertar Datos</h3>
+                    <p class="fs-5 text-muted mb-4">Aprende los métodos esenciales para ingresar registros en una base de datos MySQL, desde inserciones simples hasta la importación de archivos CSV creados con el Bloc de notas.</p>
+                    
+                    <!-- Tarjeta de Estructura de la Tabla -->
+                    <div class="card mb-4 border-light shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title text-indigo"><i class="bi bi-info-circle me-2"></i>Estructura de la Tabla de Prueba</h5>
+                            <p class="mb-3 text-secondary">Para los siguientes ejemplos, asumiremos que tenemos una tabla llamada <code>usuarios</code> creada con la siguiente estructura:</p>
+                            <pre><code class="language-sql">CREATE TABLE usuarios (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                nombre VARCHAR(100),
+                email VARCHAR(100),
+                edad INT
+            );</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- Método 1 -->
+                    <div class="card mb-4 border-light shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title text-indigo"><i class="bi bi-1-circle me-2"></i>Método 1: Inserción Individual Estándar</h5>
+                            <p class="text-secondary">Es la forma básica de insertar un solo registro especificando las columnas y los valores correspondientes.</p>
+                            <pre><code class="language-sql">INSERT INTO usuarios (nombre, email, edad) 
+            VALUES ('Juan Pérez', 'juan.perez@email.com', 28);</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- Método 2 -->
+                    <div class="card mb-4 border-light shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title text-indigo"><i class="bi bi-2-circle me-2"></i>Método 2: Inserción Múltiple o Masiva (Batch Insert)</h5>
+                            <p class="text-secondary">Permite insertar varias filas en una sola instrucción SQL, lo cual es mucho más eficiente que hacer múltiples consultas individuales.</p>
+                            <pre><code class="language-sql">INSERT INTO usuarios (nombre, email, edad) 
+            VALUES 
+            ('Ana Gómez', 'ana.gomez@email.com', 32),
+            ('Carlos Ruiz', 'carlos.ruiz@email.com', 24),
+            ('María López', 'maria.lopez@email.com', 19);</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- Método 3 -->
+                    <div class="card mb-4 border-light shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title text-indigo"><i class="bi bi-3-circle me-2"></i>Método 3: Inserción desde otra Tabla (INSERT INTO ... SELECT)</h5>
+                            <p class="text-secondary">Se utiliza para copiar registros de una tabla a otra de manera automatizada. Por ejemplo, transferir datos desde una tabla temporal llamada <code>nuevos_usuarios</code>:</p>
+                            <pre><code class="language-sql">INSERT INTO usuarios (nombre, email, edad)
+            SELECT nombre, email, edad 
+            FROM nuevos_usuarios 
+            WHERE edad >= 18;</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- Método 4 -->
+                    <div class="card mb-4 border-light shadow-sm border-primary-subtle bg-light-subtle">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary"><i class="bi bi-4-circle me-2"></i>Método 4: Importación desde un archivo CSV (Bloc de Notas)</h5>
+                            <p class="text-secondary">Ideal para cargar grandes cantidades de datos almacenados en un archivo de texto plano de manera rápida y directa.</p>
+                            
+                            <h6 class="fw-bold mt-3 text-dark"><i class="bi bi-file-earmark-text me-1"></i>Paso 1: Crear el archivo en el Bloc de Notas (Notepad)</h6>
+                            <ol class="text-secondary">
+                                <li>Abre el <strong>Bloc de notas</strong>.</li>
+                                <li>Escribe tus datos separados por comas, un registro por línea. La primera línea es la cabecera con el nombre de las columnas:</li>
+                            </ol>
+                            <pre><code class="language-plaintext">nombre,email,edad
+            Laura Torres,laura.torres@email.com,26
+            Pedro Marmol,pedro.marmol@email.com,40
+            Sofía Castro,sofia.castro@email.com,31</code></pre>
+                            <ol start="3" class="text-secondary">
+                                <li>Guarda el archivo como <code>datos.csv</code>. Asegúrate de cambiar el <strong>Tipo</strong> a <strong>Todos los archivos (*.*)</strong> para evitar que se guarde como <code>.csv.txt</code>. Guárdalo en una ruta como <code>C:/datos/datos.csv</code>.</li>
+                            </ol>
+
+                            <h6 class="fw-bold mt-4 text-dark"><i class="bi bi-database-down me-1"></i>Paso 2: Ejecutar el comando SQL en MySQL</h6>
+                            <p class="text-secondary">Usa la instrucción <code>LOAD DATA INFILE</code> para importar el archivo CSV a tu tabla:</p>
+                            <pre><code class="language-sql">LOAD DATA INFILE 'C:/datos/datos.csv'
+            INTO TABLE usuarios
+            FIELDS TERMINATED BY ',' 
+            OPTIONALLY ENCLOSED BY '"'
+            LINES TERMINATED BY '\r\n'
+            IGNORE 1 LINES;</code></pre>
+                            
+                            <div class="alert alert-warning border-0 mt-3" role="alert">
+                                <i class="bi bi-exclamation-triangle-fill me-2"></i><strong>Nota de Seguridad:</strong> Si obtienes el error <code>secure_file_priv</code>, significa que tu servidor MySQL tiene restringido desde dónde puede leer archivos. Puedes usar la alternativa <code>LOAD DATA LOCAL INFILE</code> o colocar el archivo en el directorio permitido que te muestre el comando <code>SHOW VARIABLES LIKE "secure_file_priv";</code>.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sandbox Interactivo de Práctica -->
+                    <div class="card mt-4 border-info">
+                        <div class="card-header bg-info-subtle text-info-emphasis">
+                            <h5 class="m-0"><i class="bi bi-pencil-square me-2"></i>Área de Práctica Interactiva</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="fw-bold">Intenta escribir una consulta SQL de inserción utilizando uno de los métodos anteriores para agregar un usuario llamado "Diana Prince" de 30 años con correo "diana@mail.com".</p>
+                            <div class="mb-3">
+                                <textarea class="form-control font-monospace" id="sqlQueryInput" rows="3" placeholder="INSERT INTO usuarios (nombre, email, edad) VALUES ('Diana Prince', 'diana@mail.com', 30);"></textarea>
+                            </div>
+                            <button class="btn btn-primary" id="btnRunQuery"><i class="bi bi-play-fill me-1"></i>Ejecutar Consulta</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
             </p>
             
             <div class="text-center bg-white p-3 rounded-3 border shadow-sm mx-auto" style="max-width: 750px;">

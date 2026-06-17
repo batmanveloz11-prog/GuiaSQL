@@ -46,6 +46,186 @@
             </h4>
             <p class="mb-4" style="line-height: 1.7; color: #334155;">
                 <strong></strong>
+                <div class="row">
+                <div class="col-12">
+                    <h3 class="text-primary mb-3">Funciones de Cadena y Patrones LIKE</h3>
+                    <p class="fs-5 text-muted mb-4">Aprende a manipular textos y buscar patrones en MySQL utilizando funciones de cadena y la cláusula <code>LIKE</code>.</p>
+                    
+                    <!-- Creación e Inserción de la Tabla -->
+                    <div class="card mb-4 border-light shadow-sm">
+                        <div class="card-header bg-dark text-white fw-bold">
+                            <i class="bi bi-database-add me-2"></i>Estructura e Inserción de Tabla: alumno2
+                        </div>
+                        <div class="card-body">
+                            <pre class="mb-3"><code class="language-sql">CREATE TABLE alumno2 (
+                id INT PRIMARY KEY AUTO_INCREMENT,
+                nombre VARCHAR(50),
+                apellido VARCHAR(50),
+                email VARCHAR(80),
+                ciudad VARCHAR(50)
+            );</code></pre>
+                            <pre class="m-0"><code class="language-sql">INSERT INTO alumno2 (id, nombre, apellido, email, ciudad) VALUES
+            (1, 'Ana', 'García', 'ana.garcia@gmail.com', 'Madrid'),
+            (2, 'Carlos', 'López', 'carlos.lopez@hotmail.com', 'Barcelona'),
+            (3, 'Marta', 'Rodríguez', 'martarodriguez@gmail.com', 'Valencia'),
+            (4, 'Javier', 'Martínez', 'javi.martinez@gmail.com', 'Sevilla'),
+            (5, 'Lucía', 'Fernández', 'lucia.fernandez@yahoo.com', 'Zaragoza'),
+            (6, 'David', 'Gómez', 'david.gomez@outlook.com', 'Málaga'),
+            (7, 'Laura', 'Sánchez', 'laura.sanchez@gmail.com', 'Murcia'),
+            (8, 'Pablo', 'Ruiz', 'pablo.ruiz@hotmail.com', 'Palma'),
+            (9, 'Sofía', 'Jiménez', 'sofia.jimenez@gmail.com', 'Bilbao'),
+            (10, 'Alejandro', 'Moreno', 'alejandro.moreno@yahoo.com', 'Alicante'),
+            (11, 'Paola', 'Díaz', 'paola.diaz@gmail.com', 'Córdoba'),
+            (12, 'Maite', 'Álvarez', 'maite.alvarez@outlook.com', 'Valladolid'),
+            (13, 'Andrés', 'Romero', 'andres.romero@gmail.com', 'Vigo'),
+            (14, 'Clara', 'Navarro', 'clara.navarro@hotmail.com', 'Gijón'),
+            (15, 'Raúl', 'Torres', 'raul.torres@gmail.com', 'Granada');</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- ==================== EJEMPLOS DE FUNCIONES DE CADENA ==================== -->
+                    <div class="row">
+                        
+                        <!-- 1. MAYUSCULAS -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 border-light shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title text-primary"><span class="badge bg-primary me-2">1</span>Convertir a Mayúsculas (UPPER)</h5>
+                                    <pre><code class="language-sql">SELECT UPPER(nombre) AS NOMBRE_MAYUSCULAS
+            FROM alumno2;</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2. MINUSCULAS -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 border-light shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title text-success"><span class="badge bg-success me-2">2</span>Convertir a Minúsculas (LOWER)</h5>
+                                    <pre><code class="language-sql">SELECT LOWER(ciudad)
+            FROM alumno2;</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Estructura y Verificación de Inserción -->
+                        <div class="col-md-12 mb-4">
+                            <div class="card border-light shadow-sm bg-light-subtle">
+                                <div class="card-body">
+                                    <h5 class="card-title text-dark"><i class="bi bi-info-circle-fill me-2"></i>Estructura e Inserción de Prueba</h5>
+                                    <pre class="mb-2"><code class="language-sql">DESC alumno2;</code></pre>
+                                    <pre class="mb-2"><code class="language-sql">INSERT INTO alumno2 VALUES(null, " GABRIEL ", " AGUIRRE ", " hola@gmail.com ", "EDOMEX");</code></pre>
+                                    <pre class="m-0"><code class="language-sql">SELECT * FROM alumno2;</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3. ELIMINAR ESPACIOS -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 border-light shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title text-warning text-dark"><span class="badge bg-warning text-dark me-2">3</span>Eliminar Espacios en Blanco (TRIM)</h5>
+                                    <pre><code class="language-sql">SELECT TRIM(nombre) AS nombre_sin_espacios
+            FROM alumno2;</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 4. SUBCADENAS -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 border-light shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title text-dark"><span class="badge bg-dark me-2">4</span>Extraer Subcadenas (SUBSTRING)</h5>
+                                    <pre><code class="language-sql">SELECT SUBSTRING(nombre, 1, 2) AS subcadena
+            FROM alumno2;</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 5. POSICION DE CARACTER -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 border-light shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title text-danger"><span class="badge bg-danger me-2">5</span>Posición de Carácter (INSTR)</h5>
+                                    <pre><code class="language-sql">SELECT email, INSTR(email, '@') AS Posicion_arroba
+            FROM alumno2;</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 6. CONCATENAR -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 border-light shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title text-info"><span class="badge bg-info text-dark me-2">6</span>Concatenar Cadenas (CONCAT)</h5>
+                                    <pre><code class="language-sql">SELECT CONCAT(nombre, " ", apellido) AS nombre_completo
+            FROM alumno2;</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 7. REEMPLAZAR CARACTERES -->
+                        <div class="col-md-12 mb-4">
+                            <div class="card border-light shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title text-indigo"><span class="badge bg-indigo me-2">7</span>Reemplazar Caracteres (REPLACE)</h5>
+                                    <pre class="mb-2"><code class="language-sql">SELECT REPLACE("hola", 'o', 'ofo') AS IdiomaF FROM alumno2;</code></pre>
+                                    <pre class="m-0"><code class="language-sql">SELECT REPLACE((SELECT REPLACE("hola", 'o', 'ofo') AS IdiomaF), 'a', 'afa') AS IdiomaF;</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 8. INVERTIR -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 border-light shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title text-primary"><span class="badge bg-primary me-2">8</span>Invertir Cadena (REVERSE)</h5>
+                                    <pre><code class="language-sql">SELECT REVERSE("Anita lava la tina");</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 9. LONGITUD DE CADENA -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 border-light shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title text-success"><span class="badge bg-success me-2">9</span>Longitud de Cadena (LENGTH)</h5>
+                                    <pre><code class="language-sql">SELECT nombre, LENGTH(nombre) AS LONGITUD
+            FROM alumno2;</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 10. PATRONES CON LIKE -->
+                        <div class="col-md-12 mb-4">
+                            <div class="card border-light shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title text-warning text-dark"><span class="badge bg-warning text-dark me-2">10</span>Buscar Patrones con LIKE</h5>
+                                    <pre><code class="language-sql">SELECT nombre
+            FROM alumno2
+            WHERE nombre LIKE "_a%";</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Sandbox Interactivo de Práctica -->
+                    <div class="card mt-4 border-info">
+                        <div class="card-header bg-info-subtle text-info-emphasis">
+                            <h5 class="m-0"><i class="bi bi-pencil-square me-2"></i>Área de Práctica Interactiva</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="fw-bold">Intenta escribir una consulta SQL para concatenar el nombre y el correo electrónico de los alumnos:</p>
+                            <div class="mb-3">
+                                <textarea class="form-control font-monospace" id="sqlQueryInput" rows="3" placeholder="SELECT CONCAT(nombre, ' - ', email) FROM alumno2;"></textarea>
+                            </div>
+                            <button class="btn btn-primary" id="btnRunQuery"><i class="bi bi-play-fill me-1"></i>Ejecutar Consulta</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
             </p>
             
             <div class="text-center bg-white p-3 rounded-3 border shadow-sm mx-auto" style="max-width: 750px;">

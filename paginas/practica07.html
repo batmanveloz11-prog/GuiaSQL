@@ -46,6 +46,99 @@
             </h4>
             <p class="mb-4" style="line-height: 1.7; color: #334155;">
                 <strong></strong>
+                <div class="row">
+    <div class="col-12">
+        <h3 class="text-primary mb-3">7. DELETE - Eliminar Datos (Katanas Edition)</h3>
+        <p class="fs-5 text-muted mb-4"><code>DELETE</code> es una sentencia de MySQL que se utiliza para eliminar uno o más registros (filas) de una tabla según una condición específica.</p>
+        
+        <!-- Recomendación -->
+        <div class="alert alert-warning border-0 mb-4 shadow-sm" role="alert">
+            <h6 class="alert-heading fw-bold text-warning-emphasis"><i class="bi bi-lightbulb-fill me-2"></i>RECOMENDACIÓN</h6>
+            <p class="small mb-2 text-warning-emphasis">Antes de eliminar registros, verifica qué datos se eliminarán usando SELECT:</p>
+            <pre class="bg-dark text-white p-2 m-0 rounded" style="font-size: 0.8rem;"><code class="language-sql">SELECT * FROM katanas WHERE [condición];</code></pre>
+        </div>
+
+        <!-- ==================== CASOS DE EJEMPLO ==================== -->
+        <div class="row">
+            
+            <!-- Caso 1 -->
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 border-light shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary"><span class="badge bg-primary me-2">1</span>Eliminar un registro por ID</h5>
+                        <pre><code class="language-sql">DELETE FROM katanas WHERE id = 4;</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Caso 2 -->
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 border-light shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-success"><span class="badge bg-success me-2">2</span>Eliminar por nombre</h5>
+                        <pre><code class="language-sql">DELETE FROM katanas WHERE nombre = 'Shusui';</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Caso 3 -->
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 border-light shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-warning text-dark"><span class="badge bg-warning text-dark me-2">3</span>Eliminar varios registros según una condición</h5>
+                        <pre><code class="language-sql">DELETE FROM katanas WHERE precio >= 1500;</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Caso 4 -->
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 border-light shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-dark"><span class="badge bg-dark me-2">4</span>Eliminar todos los registros</h5>
+                        <pre><code class="language-sql">DELETE FROM katanas;</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Caso 5 -->
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 border-light shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-danger"><span class="badge bg-danger me-2">5</span>Eliminar con varias condiciones</h5>
+                        <pre><code class="language-sql">DELETE FROM katanas WHERE forjador = 'Kozaburo' AND longitud = 74;</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Caso 6 -->
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 border-light shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-info"><span class="badge bg-info text-dark me-2">6</span>Eliminar con IN</h5>
+                        <pre><code class="language-sql">DELETE FROM katanas WHERE id IN (2, 5, 8);</code></pre>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Sandbox Interactivo de Práctica -->
+        <div class="card mt-4 border-info">
+            <div class="card-header bg-info-subtle text-info-emphasis">
+                <h5 class="m-0"><i class="bi bi-pencil-square me-2"></i>Área de Práctica Interactiva</h5>
+            </div>
+            <div class="card-body">
+                <p class="fw-bold">Intenta escribir una consulta SQL para eliminar las katanas fabricadas con el material "Acero Damasco":</p>
+                <div class="mb-3">
+                    <textarea class="form-control font-monospace" id="sqlQueryInput" rows="3" placeholder="DELETE FROM katanas WHERE material = 'Acero Damasco';"></textarea>
+                </div>
+                <button class="btn btn-primary" id="btnRunQuery"><i class="bi bi-play-fill me-1"></i>Ejecutar Consulta</button>
+            </div>
+        </div>
+
+    </div>
+</div>
             </p>
             
             <div class="text-center bg-white p-3 rounded-3 border shadow-sm mx-auto" style="max-width: 750px;">

@@ -46,6 +46,113 @@
             </h4>
             <p class="mb-4" style="line-height: 1.7; color: #334155;">
                 <strong></strong>
+                <div class="row">
+                <div class="col-12">
+                    <h3 class="text-primary mb-3">8. UPDATE - Actualizar Datos (Katanas Edition)</h3>
+                    <p class="fs-5 text-muted mb-4">La sentencia <code>UPDATE</code> en MySQL se utiliza para modificar los valores de los registros ya existentes en una tabla.</p>
+                    
+                    <!-- Recomendación / Advertencia -->
+                    <div class="alert alert-danger border-0 mb-4 shadow-sm" role="alert">
+                        <h6 class="alert-heading fw-bold text-danger-emphasis"><i class="bi bi-exclamation-triangle-fill me-2"></i>¡CUIDADO AL USAR UPDATE!</h6>
+                        <p class="small mb-2 text-danger-emphasis">Si olvidas poner la cláusula <code>WHERE</code>, actualizarás <strong>todos</strong> los registros de la tabla. Verifica primero con un <code>SELECT</code>:</p>
+                        <pre class="bg-dark text-white p-2 m-0 rounded" style="font-size: 0.8rem;"><code class="language-sql">SELECT * FROM katanas WHERE [condición];</code></pre>
+                    </div>
+
+                    <!-- ==================== CASOS DE EJEMPLO ==================== -->
+                    <div class="row">
+                        
+                        <!-- Caso 1 -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 border-light shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title text-primary"><span class="badge bg-primary me-2">1</span>Actualizar un solo campo por ID</h5>
+                                    <pre><code class="language-sql">UPDATE katanas
+            SET precio = 1350.00
+            WHERE id = 1;</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Caso 2 -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 border-light shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title text-success"><span class="badge bg-success me-2">2</span>Actualizar un campo de texto por nombre</h5>
+                                    <pre><code class="language-sql">UPDATE katanas
+            SET material = 'Tamahagane Refinado'
+            WHERE nombre = 'Wado Ichimonji';</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Caso 3 -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 border-light shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title text-warning text-dark"><span class="badge bg-warning text-dark me-2">3</span>Actualizar varios campos a la vez</h5>
+                                    <pre><code class="language-sql">UPDATE katanas
+            SET precio = 1800.00, longitud = 76
+            WHERE id = 5;</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Caso 4 -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 border-light shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title text-dark"><span class="badge bg-dark me-2">4</span>Actualizar varios registros según una condición</h5>
+                                    <p class="text-secondary small">Incrementar un 10% el precio de todas las katanas:</p>
+                                    <pre><code class="language-sql">UPDATE katanas
+            SET precio = precio * 1.10
+            WHERE tipo = 'Katana';</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Caso 5 -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 border-light shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title text-danger"><span class="badge bg-danger me-2">5</span>Actualizar con varias condiciones (AND)</h5>
+                                    <pre><code class="language-sql">UPDATE katanas
+            SET forjador = 'Maestro Kozaburo'
+            WHERE forjador = 'Kozaburo'
+            AND longitud >= 73;</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Caso 6 -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 border-light shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title text-info"><span class="badge bg-info text-dark me-2">6</span>Actualizar utilizando la lista IN</h5>
+                                    <pre><code class="language-sql">UPDATE katanas
+            SET precio = 999.99
+            WHERE id IN (3, 7);</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Sandbox Interactivo de Práctica -->
+                    <div class="card mt-4 border-info">
+                        <div class="card-header bg-info-subtle text-info-emphasis">
+                            <h5 class="m-0"><i class="bi bi-pencil-square me-2"></i>Área de Práctica Interactiva</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="fw-bold">Intenta escribir una consulta SQL para cambiar el tipo de la katana con ID 6 a 'Tachi':</p>
+                            <div class="mb-3">
+                                <textarea class="form-control font-monospace" id="sqlQueryInput" rows="3" placeholder="UPDATE katanas SET tipo = 'Tachi' WHERE id = 6;"></textarea>
+                            </div>
+                            <button class="btn btn-primary" id="btnRunQuery"><i class="bi bi-play-fill me-1"></i>Ejecutar Consulta</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
             </p>
             
             <div class="text-center bg-white p-3 rounded-3 border shadow-sm mx-auto" style="max-width: 750px;">

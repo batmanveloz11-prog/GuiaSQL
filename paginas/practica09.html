@@ -46,6 +46,102 @@
             </h4>
             <p class="mb-4" style="line-height: 1.7; color: #334155;">
                 <strong></strong>
+                <div class="row">
+                <div class="col-12">
+                    <h3 class="text-primary mb-3">9. SELECT Básico (Katanas Edition)</h3>
+                    <p class="fs-5 text-muted mb-4">La sentencia <code>SELECT</code> se utiliza para consultar y recuperar datos de una o más tablas en una base de datos MySQL.</p>
+                    
+                    <!-- ==================== CASOS DE EJEMPLO ==================== -->
+                    <div class="row">
+                        
+                        <!-- Caso 1 -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 border-light shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title text-primary"><span class="badge bg-primary me-2">1</span>Seleccionar todos los registros</h5>
+                                    <pre><code class="language-sql">SELECT * FROM katanas;</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Caso 2 -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 border-light shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title text-success"><span class="badge bg-success me-2">2</span>Seleccionar columnas específicas</h5>
+                                    <pre><code class="language-sql">SELECT nombre, precio FROM katanas;</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Caso 3 -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 border-light shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title text-warning text-dark"><span class="badge bg-warning text-dark me-2">3</span>Filtrar registros con WHERE</h5>
+                                    <pre><code class="language-sql">SELECT * FROM katanas WHERE material = 'Tamahagane';</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Caso 4 -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 border-light shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title text-dark"><span class="badge bg-dark me-2">4</span>Ordenar registros</h5>
+                                    <pre><code class="language-sql">SELECT * FROM katanas ORDER BY precio DESC;</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Caso 5 -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 border-light shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title text-danger"><span class="badge bg-danger me-2">5</span>Contar registros</h5>
+                                    <pre><code class="language-sql">SELECT COUNT(*) FROM katanas;</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Caso 6 -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 border-light shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title text-info"><span class="badge bg-info text-dark me-2">6</span>Buscar por ID</h5>
+                                    <pre><code class="language-sql">SELECT * FROM katanas WHERE id = 1;</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Caso 7 -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 border-light shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title text-indigo"><span class="badge bg-indigo me-2">7</span>Mostrar registros únicos (DISTINCT)</h5>
+                                    <pre><code class="language-sql">SELECT DISTINCT forjador FROM katanas;</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Sandbox Interactivo de Práctica -->
+                    <div class="card mt-4 border-info">
+                        <div class="card-header bg-info-subtle text-info-emphasis">
+                            <h5 class="m-0"><i class="bi bi-pencil-square me-2"></i>Área de Práctica Interactiva</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="fw-bold">Intenta escribir una consulta SQL para seleccionar el nombre y el forjador de todas las katanas:</p>
+                            <div class="mb-3">
+                                <textarea class="form-control font-monospace" id="sqlQueryInput" rows="3" placeholder="SELECT nombre, forjador FROM katanas;"></textarea>
+                            </div>
+                            <button class="btn btn-primary" id="btnRunQuery"><i class="bi bi-play-fill me-1"></i>Ejecutar Consulta</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
             </p>
             
             <div class="text-center bg-white p-3 rounded-3 border shadow-sm mx-auto" style="max-width: 750px;">

@@ -46,6 +46,134 @@
             </h4>
             <p class="mb-4" style="line-height: 1.7; color: #334155;">
                 <strong></strong>
+                <div class="row">
+                <div class="col-12">
+                    <h3 class="text-primary mb-3">5. Claves Primarias, Foráneas y Normalización</h3>
+                    <p class="fs-5 text-muted mb-4">Aprende a relacionar tus tablas de forma segura garantizando la integridad de tus datos y aplicando las reglas de Normalización (1FN, 2FN y 3FN) para evitar duplicidad.</p>
+                    
+                    <!-- Tarjeta de Claves Primarias y Foráneas -->
+                    <div class="card mb-4 border-light shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title text-indigo"><i class="bi bi-key me-2"></i>Claves Primarias (Primary Key) y Foráneas (Foreign Key)</h5>
+                            <p class="text-secondary">La relación entre tablas se logra mediante identificadores únicos llamados claves:</p>
+                            <ul class="text-secondary">
+                                <li><strong>Clave Primaria (PK):</strong> Columna o conjunto de columnas que identifican de forma única a cada registro en una tabla. No puede contener valores nulos ni repetirse.</li>
+                                <li><strong>Clave Foránea (FK):</strong> Columna que crea un enlace entre dos tablas. Hace referencia a la Clave Primaria (PK) de otra tabla, impidiendo registrar datos huérfanos.</li>
+                            </ul>
+                            <h6 class="fw-bold text-dark mt-3">Ejemplo de código SQL de relación (Padre - Hijo):</h6>
+                            <pre><code class="language-sql">-- 1. Tabla Padre (Independiente)
+            CREATE TABLE departamentos (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                nombre VARCHAR(50) NOT NULL
+            );
+            -- 2. Tabla Hija (Dependiente de departamentos)
+            CREATE TABLE empleados (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                nombre VARCHAR(100) NOT NULL,
+                departamento_id INT,
+                -- Definición de la Clave Foránea
+                FOREIGN KEY (departamento_id) REFERENCES departamentos(id)
+                    ON DELETE SET NULL
+                    ON UPDATE CASCADE
+            );</code></pre>
+                            <div class="alert alert-info border-0 mt-3" role="alert">
+                                <i class="bi bi-info-circle-fill me-2"></i><strong>Acciones Referenciales:</strong> <code>ON DELETE SET NULL</code> pone en nulo el campo si se borra el departamento relacionado. <code>ON UPDATE CASCADE</code> actualiza el ID en cascada en la tabla empleados si el ID del departamento cambia.
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tarjeta de Normalización -->
+                    <div class="card mb-4 border-light shadow-sm border-primary-subtle bg-light-subtle">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary"><i class="bi bi-diagram-3 me-2"></i>Normalización de Bases de Datos</h5>
+                            <p class="text-secondary">La normalización es el proceso de organizar las columnas y tablas para **reducir la redundancia (datos duplicados)** y asegurar que las dependencias tengan sentido lógico.</p>
+                            <!-- 1FN -->
+                            <div class="p-3 mb-3 bg-white rounded border">
+                                <h6 class="fw-bold text-indigo"><i class="bi bi-check-circle me-1"></i>Primera Forma Normal (1FN): Atomicidad</h6>
+                                <p class="small text-secondary mb-2">Elimina grupos repetidos o listas de datos en una sola celda. Cada celda debe contener un único valor indivisible (atómico).</p>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <span class="badge bg-danger mb-1"><i class="bi bi-x-circle me-1"></i>Incorrecto (No 1FN)</span>
+                                        <table class="table table-sm table-bordered">
+                                            <thead class="table-light"><tr><th>ID</th><th>Nombre</th><th>Teléfonos</th></tr></thead>
+                                            <tbody><tr><td>1</td><td>Juan</td><td>555-123, 555-456</td></tr></tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span class="badge bg-success mb-1"><i class="bi bg-success-circle me-1"></i>Correcto (1FN)</span>
+                                        <table class="table table-sm table-bordered">
+                                            <thead class="table-light"><tr><th>ID</th><th>Nombre</th><th>Teléfono</th></tr></thead>
+                                            <tbody>
+                                                <tr><td>1</td><td>Juan</td><td>555-123</td></tr>
+                                                <tr><td>1</td><td>Juan</td><td>555-456</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 2FN -->
+                            <div class="p-3 mb-3 bg-white rounded border">
+                                <h6 class="fw-bold text-indigo"><i class="bi bi-check-circle me-1"></i>Segunda Forma Normal (2FN): Dependencia Total</h6>
+                                <p class="small text-secondary mb-2">Debe estar en 1FN. Toda columna que no sea clave debe depender por completo de la clave primaria. Se eliminan las dependencias parciales separando los datos en diferentes tablas.</p>
+                            </div>
+                            <!-- 3FN -->
+                            <div class="p-3 bg-white rounded border">
+                                <h6 class="fw-bold text-indigo"><i class="bi bi-check-circle me-1"></i>Tercera Forma Normal (3FN): Sin Dependencias Transitivas</h6>
+                                <p class="small text-secondary mb-2">Debe estar en 2FN. Ninguna columna debe depender de otra columna que no sea la clave primaria (los atributos no clave deben ser independientes entre sí).</p>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <span class="badge bg-danger mb-1"><i class="bi bi-x-circle me-1"></i>Redundante (No 3FN)</span>
+                                        <table class="table table-sm table-bordered">
+                                            <thead class="table-light"><tr><th>Emp_ID</th><th>Nombre</th><th>Dep_ID</th><th>Dep_Nombre</th></tr></thead>
+                                            <tbody>
+                                                <tr><td>1</td><td>Juan</td><td>10</td><td>Sistemas</td></tr>
+                                                <tr><td>2</td><td>Ana</td><td>10</td><td>Sistemas</td></tr>
+                                            </tbody>
+                                        </table>
+                                        <small class="text-muted text-start d-block"><i>*El nombre del departamento depende del ID de departamento, no del ID de empleado.</i></small>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span class="badge bg-success mb-1"><i class="bi bg-success-circle me-1"></i>Optimizado (3FN - Con Clave Foránea)</span>
+                                        <p class="small mb-1 fw-semibold text-secondary">Tabla Empleados</p>
+                                        <table class="table table-sm table-bordered mb-2">
+                                            <thead class="table-light"><tr><th>Emp_ID</th><th>Nombre</th><th>Dep_ID (FK)</th></tr></thead>
+                                            <tbody>
+                                                <tr><td>1</td><td>Juan</td><td>10</td></tr>
+                                                <tr><td>2</td><td>Ana</td><td>10</td></tr>
+                                            </tbody>
+                                        </table>
+                                        <p class="small mb-1 fw-semibold text-secondary">Tabla Departamentos</p>
+                                        <table class="table table-sm table-bordered">
+                                            <thead class="table-light"><tr><th>Dep_ID (PK)</th><th>Dep_Nombre</th></tr></thead>
+                                            <tbody>
+                                                <tr><td>10</td><td>Sistemas</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Sandbox Interactivo de Práctica -->
+                    <div class="card mt-4 border-info">
+                        <div class="card-header bg-info-subtle text-info-emphasis">
+                            <h5 class="m-0"><i class="bi bi-pencil-square me-2"></i>Área de Práctica Interactiva</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="fw-bold">Escribe la sentencia SQL para crear una tabla llamada 'pedidos' que contenga un campo 'id' PRIMARY KEY, un 'monto' DECIMAL(10,2) y una clave foránea 'cliente_id' que haga referencia a la tabla 'clientes(id)'.</p>
+                            <div class="mb-3">
+                                <textarea class="form-control font-monospace" id="sqlQueryInput" rows="4" placeholder="CREATE TABLE pedidos (
+                id INT PRIMARY KEY AUTO_INCREMENT,
+                monto DECIMAL(10,2),
+                cliente_id INT,
+                FOREIGN KEY ...
+            );"></textarea>
+                            </div>
+                            <button class="btn btn-primary" id="btnRunQuery"><i class="bi bi-play-fill me-1"></i>Ejecutar Consulta</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             </p>
             
             <div class="text-center bg-white p-3 rounded-3 border shadow-sm mx-auto" style="max-width: 750px;">

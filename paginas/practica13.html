@@ -46,6 +46,132 @@
             </h4>
             <p class="mb-4" style="line-height: 1.7; color: #334155;">
                 <strong></strong>
+                <h2>13. Funciones Numéricas</h2>
+
+                <!-- ===== SUM ===== -->
+                <h3>SUM - Suma total</h3>
+                <pre><code class="language-sql">
+                SELECT SUM(precio_compra)  AS total_compra,
+                    SUM(precio_publico) AS total_publico
+                FROM Producto;
+                </code></pre>
+
+                <!-- ===== AVG ===== -->
+                <h3>AVG - Promedio</h3>
+                <pre><code class="language-sql">
+                SELECT AVG(precio_compra)  AS promedio_compra,
+                    AVG(precio_publico) AS promedio_publico
+                FROM Producto;
+                </code></pre>
+
+                <!-- ===== COUNT ===== -->
+                <h3>COUNT - Contar registros</h3>
+                <pre><code class="language-sql">
+                SELECT COUNT(*) AS total_productos
+                FROM Producto;
+                </code></pre>
+
+                <!-- ===== MAX ===== -->
+                <h3>MAX - Valor máximo</h3>
+                <pre><code class="language-sql">
+                SELECT MAX(precio_compra)  AS max_compra,
+                    MAX(precio_publico) AS max_publico
+                FROM Producto;
+                </code></pre>
+
+                <!-- ===== MIN ===== -->
+                <h3>MIN - Valor mínimo</h3>
+                <pre><code class="language-sql">
+                SELECT MIN(precio_compra)  AS min_compra,
+                    MIN(precio_publico) AS min_publico
+                FROM Producto;
+                </code></pre>
+
+                <!-- ===== ABS ===== -->
+                <h3>ABS - Valor absoluto</h3>
+                <pre><code class="language-sql">
+                SELECT nombre_producto,
+                    ABS(precio_publico - precio_compra) AS diferencia
+                FROM Producto;
+                </code></pre>
+
+                <!-- ===== ROUND ===== -->
+                <h3>ROUND - Redondear</h3>
+                <pre><code class="language-sql">
+                SELECT nombre_producto,
+                    ROUND(precio_publico / precio_compra, 2) AS margen_ratio
+                FROM Producto;
+                </code></pre>
+
+                <!-- ===== CEILING ===== -->
+                <h3>CEILING - Redondear hacia arriba</h3>
+                <pre><code class="language-sql">
+                SELECT nombre_producto,
+                    CEILING(precio_compra * 1.16) AS precio_con_iva
+                FROM Producto;
+                </code></pre>
+
+                <!-- ===== FLOOR ===== -->
+                <h3>FLOOR - Redondear hacia abajo</h3>
+                <pre><code class="language-sql">
+                SELECT nombre_producto,
+                    FLOOR(precio_publico * 0.90) AS precio_descuento
+                FROM Producto;
+                </code></pre>
+
+                <!-- ===== TRUNCATE ===== -->
+                <h3>TRUNCATE - Truncar decimales</h3>
+                <pre><code class="language-sql">
+                SELECT nombre_producto,
+                    TRUNCATE(precio_publico / 3, 1) AS precio_3_msi
+                FROM Producto;
+                </code></pre>
+
+                <!-- ===== SIGN ===== -->
+                <h3>SIGN - Signo del valor</h3>
+                <pre><code class="language-sql">
+                SELECT nombre_producto, stock,
+                    SIGN(stock) AS hay_existencia
+                FROM Producto;
+                </code></pre>
+
+                <!-- ===== CÁLCULOS DE INVENTARIO ===== -->
+                <h3>Cálculos de Inventario</h3>
+
+                <!-- Valor invertido -->
+                <h4>Valor total del inventario</h4>
+                <pre><code class="language-sql">
+                SELECT SUM(precio_compra * stock) AS valor_inventario
+                FROM Producto;
+                </code></pre>
+
+                <!-- Ingreso total -->
+                <h4>Ingreso total si vendes todo</h4>
+                <pre><code class="language-sql">
+                SELECT SUM(precio_publico * stock) AS ingreso_total
+                FROM Producto;
+                </code></pre>
+
+                <!-- Ganancia neta -->
+                <h4>Ganancia neta si vendes todo</h4>
+                <pre><code class="language-sql">
+                SELECT SUM(precio_publico * stock) - SUM(precio_compra * stock) AS ganancia_neta
+                FROM Producto;
+                </code></pre>
+
+                <!-- Todo junto -->
+                <h4>Resumen completo del inventario</h4>
+                <pre><code class="language-sql">
+                SELECT 
+                    SUM(precio_compra * stock)                                AS valor_inventario,
+                    SUM(precio_publico * stock)                               AS ingreso_total,
+                    SUM(precio_publico * stock) - SUM(precio_compra * stock)  AS ganancia_neta,
+                    ROUND(
+                        (SUM(precio_publico * stock) - SUM(precio_compra * stock))
+                        / SUM(precio_compra * stock) * 100, 2
+                    )                                                         AS margen_porcentaje
+                FROM Producto;
+                </code></pre>
             </p>
             
             <div class="text-center bg-white p-3 rounded-3 border shadow-sm mx-auto" style="max-width: 750px;">

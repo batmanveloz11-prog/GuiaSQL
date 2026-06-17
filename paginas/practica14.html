@@ -45,7 +45,88 @@
                 <i class="bi bi-book-half me-2" style="color: var(--color-hover);"></i>
             </h4>
             <p class="mb-4" style="line-height: 1.7; color: #334155;">
-                <strong></strong>
+                <strong>Funciones de Fecha y Hora</strong>
+                <h2>14. Manejo de Fechas y Horas</h2>
+
+                <!-- ===== FECHA Y HORA ACTUAL ===== -->
+                <h3>Fecha y Hora Actual</h3>
+                <pre><code>
+                SELECT NOW();            -- Fecha y hora actual
+                SELECT CURDATE();        -- Solo fecha actual
+                SELECT CURTIME();        -- Solo hora actual
+                </code></pre>
+
+                <!-- ===== UTC ===== -->
+                <h3>UTC (Tiempo Universal Coordinado)</h3>
+                <pre><code>
+                SELECT UTC_DATE();       -- Fecha en UTC
+                SELECT UTC_TIME();       -- Hora en UTC
+                SELECT UTC_TIMESTAMP();  -- Fecha y hora en UTC
+                </code></pre>
+
+                <!-- ===== EXTRAER PARTES DE UNA FECHA ===== -->
+                <h3>Extraer Partes de una Fecha</h3>
+                <pre><code>
+                SELECT YEAR(NOW());      -- Año
+                SELECT MONTH(NOW());     -- Mes
+                SELECT DAY(NOW());       -- Día
+                SELECT HOUR(NOW());      -- Hora
+                SELECT MINUTE(NOW());    -- Minutos
+                SELECT SECOND(NOW());    -- Segundos
+                </code></pre>
+
+                <!-- ===== DÍA DE LA SEMANA ===== -->
+                <h3>Día de la Semana</h3>
+                <pre><code>
+                SELECT DAYOFWEEK(NOW()); -- 1=Domingo ... 7=Sábado
+                SELECT WEEKDAY(NOW());   -- 0=Lunes   ... 6=Domingo
+                </code></pre>
+
+                <!-- ===== OTRAS EXTRACCIONES ===== -->
+                <h3>Otras Extracciones</h3>
+                <pre><code>
+                SELECT DAYOFMONTH(NOW()); -- Día del mes (1-31)
+                SELECT DAYOFYEAR(NOW());  -- Día del año (1-365)
+                SELECT WEEK(NOW());       -- Número de semana del año
+                SELECT QUARTER(NOW());    -- Trimestre (1-4)
+                </code></pre>
+
+                <!-- ===== DATE_FORMAT ===== -->
+                <h3>Formatear Fechas con DATE_FORMAT</h3>
+                <pre><code>
+                SELECT DATE_FORMAT(NOW(), '%d/%m/%Y');  -- Ej: 16/06/2025
+                SELECT DATE_FORMAT(NOW(), '%Y-%m-%d'); -- Ej: 2025-06-16
+                </code></pre>
+
+                <!-- ===== CALCULAR EDAD ===== -->
+                <h3>Calcular Edad con TIMESTAMPDIFF</h3>
+                <pre><code>
+                SELECT 
+                    id, 
+                    Nombre, 
+                    TIMESTAMPDIFF(YEAR, FechaNacimiento, CURDATE()) AS Edad, 
+                    TIMESTAMPDIFF(DAY,  FechaNacimiento, NOW())     AS Edad_Dias 
+                FROM alumno 
+                WHERE id = 2;
+                </code></pre>
+
+                <!-- ===== MENSAJE CON EDAD EXACTA ===== -->
+                <h3>Mensaje con Años y Días Exactos</h3>
+                <pre><code>
+                SELECT 
+                    CONCAT(
+                        'Mi nombre es Gabriel y tengo ',
+                        TIMESTAMPDIFF(YEAR, '2009-08-20', CURDATE()),
+                        ' años y ',
+                        DATEDIFF(
+                            CURDATE(),
+                            DATE_ADD('2009-08-20', 
+                                INTERVAL TIMESTAMPDIFF(YEAR, '2009-08-20', CURDATE()) YEAR)
+                        ),
+                        ' días.'
+                    ) AS mensaje;
+                </code></pre>
+                
             </p>
             
             <div class="text-center bg-white p-3 rounded-3 border shadow-sm mx-auto" style="max-width: 750px;">
