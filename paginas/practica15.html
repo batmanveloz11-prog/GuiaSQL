@@ -46,6 +46,197 @@
             </h4>
             <p class="mb-4" style="line-height: 1.7; color: #334155;">
                 <strong></strong>
+                <div class="row">
+                <div class="col-12">
+                    <h3 class="text-primary mb-3">JOIN - INNER JOIN</h3>
+                    <p class="fs-5 text-muted mb-4">Un <code>INNER JOIN</code> se utiliza para combinar filas de dos o más tablas en función de una columna relacionada entre ellas, devolviendo registros únicamente cuando existe una coincidencia en ambas tablas.</p>
+                    
+                    <!-- Tablas de Ejemplo -->
+                    <div class="card mb-4 border-light shadow-sm">
+                        <div class="card-header bg-dark text-white fw-bold">
+                            <i class="bi bi-database me-2"></i>Estructura de las Tablas (clientes y pedidos)
+                        </div>
+                        <div class="card-body">
+                            <pre class="mb-3"><code class="language-sql">CREATE TABLE clientes (
+                id_cliente INT AUTO_INCREMENT PRIMARY KEY,
+                nombre VARCHAR(100) NOT NULL,
+                email VARCHAR(100) NOT NULL UNIQUE,
+                telefono VARCHAR(20),
+                fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );</code></pre>
+                            <pre class="m-0"><code class="language-sql">CREATE TABLE pedidos (
+                id_pedido INT AUTO_INCREMENT PRIMARY KEY,
+                id_cliente INT NOT NULL,
+                fecha_pedido TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                total DECIMAL(10, 2) NOT NULL,
+                estado VARCHAR(50) DEFAULT 'Pendiente',
+                FOREIGN KEY (id_cliente) REFERENCES clientes(id_cliente) ON DELETE CASCADE ON UPDATE CASCADE
+            );</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- Inserciones -->
+                    <div class="card mb-4 border-light shadow-sm bg-light-subtle">
+                        <div class="card-body">
+                            <h5 class="card-title text-indigo fw-bold"><i class="bi bi-database-add me-1"></i>Inserción de Datos</h5>
+                            <pre class="mb-2"><code class="language-sql">INSERT INTO clientes (nombre, email, telefono) VALUES
+            ('Juan Pérez', 'juan.perez@email.com', '555-0199'),
+            ('Ana Gómez', 'ana.gomez@email.com', '555-0144'),
+            ('Carlos Ruiz', 'carlos.ruiz@email.com', '555-0177'),
+            ('María López', 'maria.lopez@email.com', '555-0122'),
+            ('Laura Torres', 'laura.torres@email.com', '555-0155');</code></pre>
+                            <pre class="m-0"><code class="language-sql">INSERT INTO pedidos (id_cliente, total, estado) VALUES
+            (1, 150.50, 'Completado'), 
+            (1, 45.00, 'Pendiente'),     
+            (2, 350.00, 'Completado'),  
+            (3, 89.90, 'Enviado'),       
+            (4, 12.50, 'Cancelado'),     
+            (2, 120.00, 'Pendiente');</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- INNER JOIN Caso -->
+                    <div class="card mb-4 border-light shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary"><i class="bi bi-shuffle me-2"></i>Consulta INNER JOIN</h5>
+                            <p class="text-secondary small">Devuelve solo los clientes que han realizado al menos un pedido:</p>
+                            <pre class="m-0"><code class="language-sql">SELECT 
+                clientes.id_cliente, 
+                clientes.nombre, 
+                pedidos.id_pedido, 
+                pedidos.total, 
+                pedidos.estado
+            FROM clientes 
+            INNER JOIN pedidos ON clientes.id_cliente = pedidos.id_cliente;</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- Sandbox Interactivo de Práctica -->
+                    <div class="card mt-4 border-info">
+                        <div class="card-header bg-info-subtle text-info-emphasis">
+                            <h5 class="m-0"><i class="bi bi-pencil-square me-2"></i>Área de Práctica Interactiva</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="fw-bold">Intenta escribir una consulta SQL para realizar un INNER JOIN entre clientes y pedidos que devuelva el nombre del cliente y el total de su pedido:</p>
+                            <div class="mb-3">
+                                <textarea class="form-control font-monospace" id="sqlQueryInput" rows="3" placeholder="SELECT clientes.nombre, pedidos.total FROM clientes INNER JOIN pedidos ON clientes.id_cliente = pedidos.id_cliente;"></textarea>
+                            </div>
+                            <button class="btn btn-primary" id="btnRunQuery"><i class="bi bi-play-fill me-1"></i>Ejecutar Consulta</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <h3 class="text-primary mb-3">JOIN - LEFT JOIN y RIGHT JOIN</h3>
+                    <p class="fs-5 text-muted mb-4">Los Joins externos devuelven registros incluso cuando no hay coincidencias perfectas en la relación entre tablas.</p>
+                    
+                    <!-- LEFT JOIN Caso -->
+                    <div class="card mb-4 border-light shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title text-indigo"><i class="bi bi-arrow-left-square me-2"></i>1. LEFT JOIN (Consulta externa izquierda)</h5>
+                            <p class="text-secondary small">Devuelve <strong>todos</strong> los registros de la tabla izquierda (clientes), y las filas coincidentes de la derecha (pedidos). Si no hay coincidencia, muestra valores <code>NULL</code>.</p>
+                            <pre class="mb-3"><code class="language-sql">SELECT 
+                clientes.id_cliente, 
+                clientes.nombre, 
+                pedidos.id_pedido, 
+                pedidos.total
+            FROM clientes 
+            LEFT JOIN pedidos ON clientes.id_cliente = pedidos.id_cliente;</code></pre>
+                            
+                            <!-- Representación Visual LEFT JOIN -->
+                            <div class="table-responsive" style="max-width: 600px;">
+                                <span class="badge bg-secondary mb-1">Resultado de la consulta:</span>
+                                <table class="table table-sm table-bordered text-center align-middle" style="font-size: 0.8rem;">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>id_cliente</th>
+                                            <th>nombre</th>
+                                            <th>id_pedido</th>
+                                            <th>total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>1</td><td>Juan Pérez</td><td>1</td><td>$150.50</td></tr>
+                                        <tr><td>1</td><td>Juan Pérez</td><td>2</td><td>$45.00</td></tr>
+                                        <tr><td>2</td><td>Ana Gómez</td><td>3</td><td>$350.00</td></tr>
+                                        <tr><td>2</td><td>Ana Gómez</td><td>6</td><td>$120.00</td></tr>
+                                        <tr><td>3</td><td>Carlos Ruiz</td><td>4</td><td>$89.90</td></tr>
+                                        <tr><td>4</td><td>María López</td><td>5</td><td>$12.50</td></tr>
+                                        <tr class="table-warning fw-bold">
+                                            <td>5</td>
+                                            <td>Laura Torres</td>
+                                            <td class="text-danger">NULL</td>
+                                            <td class="text-danger">NULL</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <small class="text-muted">*(Laura Torres aparece con valores NULL porque no tiene ningún pedido registrado en la tabla derecha).</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT JOIN Caso -->
+                    <div class="card mb-4 border-light shadow-sm border-primary">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary"><i class="bi bi-arrow-right-square me-2"></i>2. RIGHT JOIN (Consulta externa derecha) <span class="badge bg-primary">Visualización Completa</span></h5>
+                            <p class="text-secondary small">Devuelve <strong>todos</strong> los registros de la tabla derecha (pedidos), y las filas coincidentes de la izquierda (clientes). Si hay algún pedido sin cliente (o si el cliente no coincide), mostrará <code>NULL</code> en los campos del cliente.</p>
+                            <pre class="mb-3"><code class="language-sql">SELECT 
+                clientes.id_cliente, 
+                clientes.nombre, 
+                pedidos.id_pedido, 
+                pedidos.total
+            FROM clientes 
+            RIGHT JOIN pedidos ON clientes.id_cliente = pedidos.id_cliente;</code></pre>
+
+                            <!-- Representación Visual RIGHT JOIN -->
+                            <div class="table-responsive" style="max-width: 600px;">
+                                <span class="badge bg-primary mb-1">Resultado de la consulta (Diferencia visible):</span>
+                                <table class="table table-sm table-bordered text-center align-middle" style="font-size: 0.8rem;">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>id_cliente</th>
+                                            <th>nombre</th>
+                                            <th>id_pedido</th>
+                                            <th>total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>1</td><td>Juan Pérez</td><td>1</td><td>$150.50</td></tr>
+                                        <tr><td>1</td><td>Juan Pérez</td><td>2</td><td>$45.00</td></tr>
+                                        <tr><td>2</td><td>Ana Gómez</td><td>3</td><td>$350.00</td></tr>
+                                        <tr><td>3</td><td>Carlos Ruiz</td><td>4</td><td>$89.90</td></tr>
+                                        <tr><td>4</td><td>María López</td><td>5</td><td>$12.50</td></tr>
+                                        <tr><td>2</td><td>Ana Gómez</td><td>6</td><td>$120.00</td></tr>
+                                        <tr class="table-danger fw-bold">
+                                            <td colspan="4" class="text-center py-2 text-danger">
+                                                <i class="bi bi-x-circle-fill me-1"></i> Laura Torres (ID 5) NO APARECE aquí porque no tiene ningún pedido en la tabla derecha (pedidos).
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <small class="text-muted">*(Solo se muestran los registros de la tabla derecha "pedidos". Al estar todos los pedidos asignados a clientes existentes, no hay valores NULL en la columna cliente).</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sandbox Interactivo de Práctica -->
+                    <div class="card mt-4 border-info">
+                        <div class="card-header bg-info-subtle text-info-emphasis">
+                            <h5 class="m-0"><i class="bi bi-pencil-square me-2"></i>Área de Práctica Interactiva</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="fw-bold">Intenta escribir una consulta utilizando RIGHT JOIN para listar todos los pedidos y sus clientes correspondientes:</p>
+                            <div class="mb-3">
+                                <textarea class="form-control font-monospace" id="sqlQueryInput" rows="3" placeholder="SELECT clientes.nombre, pedidos.id_pedido FROM clientes RIGHT JOIN pedidos ON clientes.id_cliente = pedidos.id_cliente;"></textarea>
+                            </div>
+                            <button class="btn btn-primary" id="btnRunQuery"><i class="bi bi-play-fill me-1"></i>Ejecutar Consulta</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
             </p>
             
             <div class="text-center bg-white p-3 rounded-3 border shadow-sm mx-auto" style="max-width: 750px;">
