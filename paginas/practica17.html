@@ -24,7 +24,7 @@
         <!-- ===================== CONTENIDO PRINCIPAL ===================== -->
         <main class="contenido flex-grow-1">
             <div class="container-fluid p-4">
-                <h1 class="mb-4">10. Operadores lógicos</h1>
+                <h1 class="mb-4">17. Creación de vistas</h1>
  
                 <!-- Contenedor donde se cargará el contenido de cada práctica -->
     <div class="practica-contenedor">
@@ -32,11 +32,11 @@
     <div class="practica-header pb-3 mb-4" style="border-bottom: 2px solid var(--color-borde);">
         <div class="d-flex align-items-center gap-2 mb-2">
             <span class="badge px-3 py-2 text-white" style="background-color: var(--color-activo); font-weight: 600; border-radius: 6px;">
-                Tema 10
+                Tema 17
             </span>
             <small class="text-muted fw-semibold">Fundamentos</small>
         </div>
-        <h2 class="fw-bold" style="color: var(--color-primario); letter-spacing: -0.5px;">Operadores lógicos (pdf de Charbel y Hector)</h2>
+        <h2 class="fw-bold" style="color: var(--color-primario); letter-spacing: -0.5px;">Creación de vistas</h2>
     </div>
 
     <div class="card border-0 shadow-sm rounded-3 overflow-hidden mb-4" style="background-color: #f8fafc; border: 1px solid var(--color-borde) !important;">
@@ -46,33 +46,141 @@
             </h4>
             <p class="mb-4" style="line-height: 1.7; color: #334155;">
                 <strong></strong>
+                <div class="row">
+                <div class="col-12">
+                    <h3 class="text-primary mb-3">17. Vistas (VIEWS)</h3>
+                    <p class="fs-5 text-muted mb-4">Una vista (<code>VIEW</code>) es una consulta SQL guardada con un nombre en la base de datos. Actúa como una tabla virtual que puedes consultar como si fuera una tabla real, simplificando consultas complejas y reutilizando lógica.</p>
+                    
+                    <!-- Alerta informativa -->
+                    <div class="alert alert-info border-0 mb-4 shadow-sm" role="alert">
+                        <h6 class="alert-heading fw-bold text-info-emphasis"><i class="bi bi-info-circle-fill me-2"></i>¿Para qué sirven las Vistas?</h6>
+                        <p class="small m-0 text-info-emphasis">Simplifican consultas largas, restringen el acceso a columnas específicas y permiten reutilizar lógica de negocio sin escribir el mismo código repetidamente.</p>
+                    </div>
+                    <!-- ===================== BLOQUE 1: EMPLEADOS / DEPARTAMENTOS ===================== -->
+                    <div class="card mb-3 border-light shadow-sm">
+                        <div class="card-header bg-dark text-white fw-bold">
+                            <i class="bi bi-database me-2"></i>Base de Datos: Empleados y Departamentos
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- Vista 1: empleados_ti -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 border-light shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title text-primary"><span class="badge bg-primary me-2">1</span>Vista simple con filtro (WHERE)</h5>
+                                    <p class="text-secondary small">Crea una vista que filtra solo los empleados del departamento 2 (TI):</p>
+                                    <pre class="mb-2"><code class="language-sql">CREATE VIEW empleados_ti AS
+            SELECT nombre, depto_id
+            FROM empleados
+            WHERE depto_id = 2;</code></pre>
+                                    <p class="text-secondary small">Consultas sobre la vista:</p>
+                                    <pre class="mb-2"><code class="language-sql">SELECT * FROM empleados_ti;</code></pre>
+                                    <pre class="m-0"><code class="language-sql">SELECT nombre FROM empleados_ti
+            WHERE nombre LIKE "%a";</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Vista 2: empleados2 con JOIN -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 border-light shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title text-success"><span class="badge bg-success me-2">2</span>Vista con JOIN entre tablas</h5>
+                                    <p class="text-secondary small">Crea una vista combinando empleados y departamentos con INNER JOIN:</p>
+                                    <pre class="mb-2"><code class="language-sql">CREATE VIEW empleados2 AS
+            SELECT e.nombre AS empleado, 
+                e.salario, 
+                d.nombre AS departamento
+            FROM empleados e 
+            INNER JOIN departamentos d ON (d.id = e.depto_id);</code></pre>
+                                    <p class="text-secondary small">Consultas sobre la vista:</p>
+                                    <pre class="mb-2"><code class="language-sql">SELECT * FROM empleados2;</code></pre>
+                                    <pre class="m-0"><code class="language-sql">SELECT departamento, COUNT(*) AS Cuantos
+            FROM empleados2
+            GROUP BY departamento;</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Consultas directas sin VIEW -->
+                        <div class="col-md-12 mb-4">
+                            <div class="card border-light shadow-sm bg-light-subtle">
+                                <div class="card-body">
+                                    <h5 class="card-title text-dark"><i class="bi bi-terminal me-2"></i>Consultas Directas con JOIN (Sin Vista)</h5>
+                                    <p class="text-secondary small">Consulta con alias Nombre_Empleado:</p>
+                                    <pre class="mb-2"><code class="language-sql">SELECT e.nombre AS Nombre_Empleado, e.Salario, d.nombre
+            FROM empleados e 
+            INNER JOIN departamentos d ON (d.id = e.depto_id);</code></pre>
+                                    <p class="text-secondary small">Consulta con alias Empleado y departamento:</p>
+                                    <pre class="m-0"><code class="language-sql">SELECT e.nombre AS Empleado, e.Salario, d.nombre AS departamento
+            FROM empleados e 
+            INNER JOIN departamentos d ON (d.id = e.depto_id);</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ===================== BLOQUE 2: BASE DE DATOS ESCUELAS ===================== -->
+                    <div class="card mb-3 border-light shadow-sm">
+                        <div class="card-header bg-dark text-white fw-bold">
+                            <i class="bi bi-mortarboard me-2"></i>Base de Datos: Escuelas / Alumnos
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- Vista Alumno_2 -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 border-light shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title text-warning text-dark"><span class="badge bg-warning text-dark me-2">3</span>Vista de Alumnos - Datos Académicos</h5>
+                                    <p class="text-secondary small">Crea una vista con nombre, promedio y edad del alumno:</p>
+                                    <pre class="mb-2"><code class="language-sql">CREATE VIEW Alumno_2 AS
+            SELECT Nombre, Promedio, Edad
+            FROM alumno;</code></pre>
+                                    <p class="text-secondary small">Consultas sobre la vista:</p>
+                                    <pre class="mb-2"><code class="language-sql">SELECT * FROM Alumno_2;</code></pre>
+                                    <pre class="m-0"><code class="language-sql">SELECT * FROM Alumno_2
+            WHERE Promedio &lt; 9;</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Vista Alumno_3 -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 border-light shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title text-danger"><span class="badge bg-danger me-2">4</span>Vista de Alumnos - Datos Personales</h5>
+                                    <p class="text-secondary small">Crea una vista con los apellidos y estatura del alumno:</p>
+                                    <pre class="mb-2"><code class="language-sql">CREATE VIEW Alumno_3 AS
+            SELECT ApellidoPaterno, ApellidoMaterno, Estatura
+            FROM alumno;</code></pre>
+                                    <p class="text-secondary small">Consultas sobre la vista:</p>
+                                    <pre class="mb-2"><code class="language-sql">SELECT * FROM Alumno_3;</code></pre>
+                                    <pre class="m-0"><code class="language-sql">SELECT ApellidoPaterno, ApellidoMaterno
+            FROM Alumno_3
+            WHERE ApellidoPaterno LIKE "%a";</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Sandbox Interactivo de Práctica -->
+                    <div class="card mt-4 border-info">
+                        <div class="card-header bg-info-subtle text-info-emphasis">
+                            <h5 class="m-0"><i class="bi bi-pencil-square me-2"></i>Área de Práctica Interactiva</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="fw-bold">Intenta crear una vista llamada <code>alumnos_destacados</code> que seleccione solo los alumnos con promedio mayor o igual a 9:</p>
+                            <div class="mb-3">
+                                <textarea class="form-control font-monospace" id="sqlQueryInput" rows="4" placeholder="CREATE VIEW alumnos_destacados AS
+            SELECT Nombre, Promedio
+            FROM alumno
+            WHERE Promedio >= 9;"></textarea>
+                            </div>
+                            <button class="btn btn-primary" id="btnRunQuery"><i class="bi bi-play-fill me-1"></i>Ejecutar Consulta</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
             </p>
             
             <div class="text-center bg-white p-3 rounded-3 border shadow-sm mx-auto" style="max-width: 750px;">
-                <img src="img/MySQL_Filter_Mastery/MySQL_Filter_Mastery_page-0001.jpg" alt="" class="img-fluid rounded-2">
-                <img src="img/MySQL_Filter_Mastery/MySQL_Filter_Mastery_page-0002.jpg" alt="" class="img-fluid rounded-2">
-                <img src="img/MySQL_Filter_Mastery/MySQL_Filter_Mastery_page-0003.jpg" alt="" class="img-fluid rounded-2">
-                <img src="img/MySQL_Filter_Mastery/MySQL_Filter_Mastery_page-0004.jpg" alt="" class="img-fluid rounded-2">
-                <img src="img/MySQL_Filter_Mastery/MySQL_Filter_Mastery_page-0005.jpg" alt="" class="img-fluid rounded-2">
-                <img src="img/MySQL_Filter_Mastery/MySQL_Filter_Mastery_page-0006.jpg" alt="" class="img-fluid rounded-2">
-                <img src="img/MySQL_Filter_Mastery/MySQL_Filter_Mastery_page-0007.jpg" alt="" class="img-fluid rounded-2">
-                <img src="img/MySQL_Filter_Mastery/MySQL_Filter_Mastery_page-0008.jpg" alt="" class="img-fluid rounded-2">
-                <img src="img/MySQL_Filter_Mastery/MySQL_Filter_Mastery_page-0009.jpg" alt="" class="img-fluid rounded-2">
-                <img src="img/MySQL_Filter_Mastery/MySQL_Filter_Mastery_page-0010.jpg" alt="" class="img-fluid rounded-2">
-                <img src="img/MySQL_Operator_Mastery/MySQL_Operator_Mastery_page-0001.jpg" alt="" class="img-fluid rounded-2">
-                <img src="img/MySQL_Operator_Mastery/MySQL_Operator_Mastery_page-0002.jpg" alt="" class="img-fluid rounded-2">
-                <img src="img/MySQL_Operator_Mastery/MySQL_Operator_Mastery_page-0003.jpg" alt="" class="img-fluid rounded-2">
-                <img src="img/MySQL_Operator_Mastery/MySQL_Operator_Mastery_page-0004.jpg" alt="" class="img-fluid rounded-2">
-                <img src="img/MySQL_Operator_Mastery/MySQL_Operator_Mastery_page-0005.jpg" alt="" class="img-fluid rounded-2">
-                <img src="img/MySQL_Operator_Mastery/MySQL_Operator_Mastery_page-0006.jpg" alt="" class="img-fluid rounded-2">
-                <img src="img/MySQL_Operator_Mastery/MySQL_Operator_Mastery_page-0007.jpg" alt="" class="img-fluid rounded-2">
-                <img src="img/MySQL_Operator_Mastery/MySQL_Operator_Mastery_page-0008.jpg" alt="" class="img-fluid rounded-2">
-                <img src="img/Operadores-lógicos.png/4949d9a860b5bf961db95e0b267c0da0-0.png" alt="" class="img-fluid rounded-2">
-                <img src="img/Operadores-lógicos.png/4949d9a860b5bf961db95e0b267c0da0-1.png" alt="" class="img-fluid rounded-2">
-                <img src="img/Operadores-lógicos.png/4949d9a860b5bf961db95e0b267c0da0-2.png" alt="" class="img-fluid rounded-2">
-                <img src="img/Operadores-lógicos.png/4949d9a860b5bf961db95e0b267c0da0-3.png" alt="" class="img-fluid rounded-2">
-                <img src="img/Operadores-lógicos.png/4949d9a860b5bf961db95e0b267c0da0-4.png" alt="" class="img-fluid rounded-2">
-                <img src="img/Operadores-lógicos.png/4949d9a860b5bf961db95e0b267c0da0-5.png" alt="" class="img-fluid rounded-2">
             </div>
         </div>
     </div>
@@ -85,7 +193,7 @@
         </div>
         <button class="btn btn-completar text-white px-4 py-2.5 d-inline-flex align-items-center gap-2" 
                 style="background-color: var(--color-activo); font-weight: 600; border: none; border-radius: 8px; transition: all 0.2s ease;"
-                onclick="marcarPracticaCompletada('practica10')">
+                onclick="marcarPracticaCompletada('practica17')">
             <i class="bi bi-check-circle-fill fs-5"></i> Marcar como Completada
         </button>
     </div>
